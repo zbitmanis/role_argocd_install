@@ -1,0 +1,17 @@
+- name: Create argocd namespace
+  kubernetes.core.k8s:
+    name: '{{ argocd_namespace }}'
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Download deployment
+  get_url:
+    url: {{ argocd_url }}
+    dest: {{ argocd_download_dest_folder }} 
+    mode: '0440'
+
+- name: Apply Argo CD installation file  
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', '{{ argocd_download_deployment_file }}') | from_yaml }}"
