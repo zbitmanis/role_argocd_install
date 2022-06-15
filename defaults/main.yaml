@@ -1,5 +1,6 @@
 argocd_version: 'v2.4.0'
 argocd_url: 'https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_version }}/manifests/install.yaml'
 argocd_cli_url: 'https://github.com/argoproj/argo-cd/releases/download/{{ argocd_version }}/argocd-linux-amd64'
-argocd_download_dest_folder: '{{role_path}}/files/download'
+argocd_download_dest_folder: '{{role_path}}/files/'
+argocd_download_deployment_file: '{{ argocd_download_dest_folder }}/install.yaml'
 argocd_namespace: 'namespace'
