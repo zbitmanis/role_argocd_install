@@ -5,10 +5,21 @@
     kind: Namespace
     state: present
 
-- name: Download deployment
+- name: Create argocd directory
+  ansible.builtin.file:
+    path: '{{ argocd_download_dest_folder }}' 
+    state: directory
+
+- name: Download argocd deployment
   get_url:
     url: '{{ argocd_url }}'
-    dest: '{{ argocd_download_dest_folder }}' 
+    dest: '{{ argocd_download_deployment_file }}' 
+    mode: '0440'
+
+- name: Download argocd deployment
+  get_url:
+    url: '{{ argocd_url }}'
+    dest: '{{ argocd_download_deployment_file }}' 
     mode: '0440'
 
 - name: Apply Argo CD installation file  
