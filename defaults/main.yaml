@@ -3,6 +3,6 @@ argocd_url: 'https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_versio
 argocd_cli_url: 'https://github.com/argoproj/argo-cd/releases/download/{{ argocd_version }}/argocd-linux-amd64'
 argocd_download_dest_folder: '{{role_path}}/files/download'
 argocd_download_deployment_file: '{{ argocd_download_dest_folder }}/install.yaml'
-argocd_download_cli_file: '{{ argocd_download_dest_folder }}/install.yaml'
-argocd_iniital_repo_file: '{{ argocd_download_dest_folder }}/argocd'
+argocd_download_cli_file: '{{ argocd_download_dest_folder }}/argocd'
+argocd_iniital_repo_file: '{{ argocd_download_dest_folder }}/repo.yaml'
 argocd_namespace: 'argocd'

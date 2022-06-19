@@ -16,11 +16,17 @@
     dest: '{{ argocd_download_deployment_file }}' 
     mode: '0440'
 
-- name: Download argocd deployment
+- name: Download argocd install yaml
   get_url:
     url: '{{ argocd_url }}'
     dest: '{{ argocd_download_deployment_file }}' 
     mode: '0440'
+
+- name: Download argocd cli binary
+  get_url:
+    url: '{{ argocd_cli_url }}'
+    dest: '{{ argocd_download_cli_file }}' 
+    mode: '0750'
 
 - name: Apply Argo CD installation file  
   kubernetes.core.k8s:
