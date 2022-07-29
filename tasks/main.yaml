@@ -8,26 +8,26 @@
 
 - name: create argocd directory
   ansible.builtin.file:
-    path: '{{ argocd_download_dest_folder }}' 
+    path: '{{ install_argocd_download_dest_folder }}' 
     state: directory
 
 - name: download argocd install yaml
   get_url:
-    url: '{{ argocd_url }}'
-    dest: '{{ argocd_download_deployment_file }}' 
+    url: '{{ install_argocd_url }}'
+    dest: '{{ install_argocd_download_deployment_file }}' 
     mode: '0440'
 
 - name: download argocd cli binary
   get_url:
-    url: '{{ argocd_cli_url }}'
-    dest: '{{ argocd_download_cli_file }}' 
+    url: '{{ install_argocd_cli_url }}'
+    dest: '{{ install_argocd_download_cli_file }}' 
     mode: '0750'
 
 - name: deploy argocd on K8s   
   kubernetes.core.k8s:
     state: present
     namespace: '{{ install_argocd_namespace }}'
-    src: '{{ argocd_download_deployment_file }}' 
+    src: '{{ install_argocd_download_deployment_file }}' 
 
 - name: create folder for app of apps
   file:
