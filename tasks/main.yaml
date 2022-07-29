@@ -1,6 +1,7 @@
+---
 - name: create argocd namespace
   kubernetes.core.k8s:
-    name: '{{ argocd_namespace }}'
+    name: '{{ install_argocd_namespace }}'
     api_version: v1
     kind: Namespace
     state: present
@@ -25,7 +26,7 @@
 - name: deploy argocd on K8s   
   kubernetes.core.k8s:
     state: present
-    namespace: '{{ argocd_namespace }}'
+    namespace: '{{ install_argocd_namespace }}'
     src: '{{ argocd_download_deployment_file }}' 
 
 - name: create folder for app of apps
@@ -42,7 +43,7 @@
 - name: deploy app of apps on K8s   
   kubernetes.core.k8s:
     state: present
-    namespace: '{{ argocd_namespace }}'
+    namespace: '{{ install_argocd_namespace }}'
     src: '{{ role_path }}/files/aoa/aoa.yaml'
 
   
