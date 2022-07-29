@@ -1,35 +1,48 @@
-- name: Create argocd namespace
+- name: create argocd namespace
   kubernetes.core.k8s:
     name: '{{ argocd_namespace }}'
     api_version: v1
     kind: Namespace
     state: present
 
-- name: Create argocd directory
+- name: create argocd directory
   ansible.builtin.file:
     path: '{{ argocd_download_dest_folder }}' 
     state: directory
 
-- name: Download argocd deployment
+- name: download argocd install yaml
   get_url:
     url: '{{ argocd_url }}'
     dest: '{{ argocd_download_deployment_file }}' 
     mode: '0440'
 
-- name: Download argocd install yaml
-  get_url:
-    url: '{{ argocd_url }}'
-    dest: '{{ argocd_download_deployment_file }}' 
-    mode: '0440'
-
-- name: Download argocd cli binary
+- name: download argocd cli binary
   get_url:
     url: '{{ argocd_cli_url }}'
     dest: '{{ argocd_download_cli_file }}' 
     mode: '0750'
 
-- name: Apply Argo CD installation file  
+- name: deploy argocd on K8s   
   kubernetes.core.k8s:
     state: present
     namespace: '{{ argocd_namespace }}'
     src: '{{ argocd_download_deployment_file }}' 
+
+- name: create folder for app of apps
+  file:
+    path: '{{ role_path }}/files/aoa' 
+    state: directory 
+    mode: 07550
+
+- name: create app of apps yaml
+  template:
+    src: app_of_apps.j2
+    dst: '{{ role_path }}/files/aoa/aoa.yaml'
+
+- name: deploy app of apps on K8s   
+  kubernetes.core.k8s:
+    state: present
+    namespace: '{{ argocd_namespace }}'
+    src: '{{ role_path }}/files/aoa/aoa.yaml'
+
+  

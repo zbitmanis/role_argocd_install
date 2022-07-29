@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ install_argocd_aoa_name }}
+  namespace: argocd
+spec:
+  project: default
+  source:
+    path: {{ install_argocd_aoa_repo_url }}
+    repoURL: {{ install_argocd_aoa_repo_url }}
+    targetRevision: {{ install_argocd_aoa_target_revision }}
+    helm:
+      valueFiles:
+       {% for file in install_argocd_aoa_helm_values_files %}
+        - {{ file }}
+        {% endfor %}
+  destination:
+    server:  {{ install_argocd_aoa_destination_server  | default "https://kubernetes.default.svc" }}
+    namespace: {{ install_argocd_aoa_destination_namespace }}
+  {% if install_argocd_aoa_autosync %}  
+  syncPolicy:
+    automated: {}
+    syncOptions:
+     - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+  {% endif %}
