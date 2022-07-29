@@ -11,4 +11,7 @@ install_argocd_aoa_repo_url: 'https://github.com/zbitmanis/gitops-infra'
 install_argocd_aoa_target_revision: 'HEAD'
 install_argocd_aoa_destination_namespace: 'argocd'
 install_argocd_aoa_autosync: true
-
+install_argocd_aoa_helm_values_files:
+  - values.yaml
+install_argocd_aoa_destination_server: 'https://kubernetes.default.svc'
+install_argocd_aoa_patd: 'app-of-apps'
