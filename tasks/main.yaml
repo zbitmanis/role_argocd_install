@@ -38,7 +38,7 @@
 - name: create app of apps yaml
   template:
     src: app_of_apps.j2
-    dst: '{{ role_path }}/files/aoa/aoa.yaml'
+    dest: '{{ role_path }}/files/aoa/aoa.yaml'
 
 - name: deploy app of apps on K8s   
   kubernetes.core.k8s:
